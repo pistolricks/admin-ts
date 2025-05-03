@@ -9,9 +9,11 @@
     "start": "vinxi start"
   },
   "dependencies": {
-    "@clerk/clerk-js": "^5.63.5",
     "@gapu/formix": "^2.0.2",
+    "@klass/core": "^3.4.11",
+    "@klass/solid": "^3.4.11",
     "@tailwindcss/vite": "^4.1.5",
+    "@tanstack/react-virtual": "^3.13.6",
     "@tanstack/solid-query": "^5.75.0",
     "@tanstack/solid-query-devtools": "^5.75.0",
     "@tanstack/solid-router": "^1.119.0",

@@ -7,4 +7,4 @@ const router = createRouter()
 
 
 /* TODO: change back to hydrate later */
-render(() => <StartClient router={router} />, document.body)
+hydrate(() => <StartClient router={router} />, document.body)

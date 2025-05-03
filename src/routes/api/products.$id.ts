@@ -10,19 +10,15 @@ import {API_URL, Product, ProductsResponse} from "~/utils/products";
 export const APIRoute = createAPIFileRoute('/api/products/$id')({
   GET: async ({ request, params }) => {
     console.info(`Fetching products by style=${params.id}... @`, request.url)
-    try {
-      const res = await axios.get<ProductsResponse>(
-          API_URL + '/v1/products?style=' + params.id,
-      )
 
+    const res = await axios.get<ProductsResponse>(
+        API_URL + '/v1/products?style=' + params.id,
+    )
 
+    return json({
+      products: res.data.products,
+      metadata: res.data.metadata,
+    })
+  }
 
-
-
-      return json(res.data)
-    } catch (e) {
-      console.error(e)
-      return json({ error: 'User not found' }, { status: 404 })
-    }
-  },
 })
