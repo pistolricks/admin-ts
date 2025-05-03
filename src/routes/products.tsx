@@ -23,7 +23,7 @@ export const Route = createFileRoute('/products')({
 function ProductsComponent() {
     const data = Route.useLoaderData()
 
-    const [getData, setData] = createSignal(data())
+
 
     onMount(() => {
         console.log(data())
@@ -32,7 +32,7 @@ function ProductsComponent() {
     return (
         <div class="p-2 flex gap-2">
             <ul class="list-disc pl-4">
-                <For each={getData().styles}>
+                <For each={data().styles}>
                 {(product) => {
                     return (
                         <li class="whitespace-nowrap">
