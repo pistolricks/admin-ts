@@ -25,23 +25,23 @@ const GalleryProduct: Component<PROPS> = props => {
     return (
         <div class="">
 
-            <Link to={href()} class="group relative pt-2 flex flex-col items-center w-full min-h-[400px] max-h-[640px]">
+            <Link to={href()} class="group relative pt-2 flex flex-col items-center overflow-hidden min-h-[400px] max-h-[600px] w-11/12">
                 <div class="relative w-full mx-auto flex justify-center bg-white items-center min-h-[300px] max-h-[400px]">
                     <img
                         src={`${imagePath}/${props.color_product_image}/gallery`}
                         alt={props.product_title}
                         class={classNames(
-                            "absolute inset-0 bg-white object-center object-scale-down min-h-[300px] max-h-[400px] group-hover:opacity-75")}/>
+                            "absolute inset-x-1 inset-y-0 bg-white object-center object-scale-down min-h-[300px] max-h-[400px] group-hover:opacity-75")}/>
                 </div>
                 <div class="relative w-full text-center h-[80px] bg-white">
                     <div class="bg-white absolute  inset-x-0 top-0 flex flex-col text-sm font-medium text-gray-11">
                           <span class={'font-semibold pt-2 text-[10px]'}><span
                               class={''}>{props.mill}</span> - {props.id}</span>
-                        <span class={'text-balance px-2 pt-1 text-gray-12 text-xs'}>{name()}</span>
+                        <span class={'text-balance px-2 pt-1 text-gray-12 text-xs'}>{name()?.replace(props.mill.toUpperCase(), "")}</span>
                     </div>
 
                 </div>
-                <p class={'absolute bottom-1 w-full flex justify-center inset-x-0 text-sm'}>{NumberWithCurrency()}+ </p>
+                <p class={'absolute bottom-2 w-full flex justify-center inset-x-0 text-sm'}>{NumberWithCurrency()}+ </p>
             </Link>
             {/*
             <Drawer.Trigger
