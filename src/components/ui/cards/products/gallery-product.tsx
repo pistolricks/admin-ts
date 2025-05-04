@@ -25,7 +25,7 @@ const GalleryProduct: Component<PROPS> = props => {
     return (
         <div class="">
 
-            <Link to={href()} class="group relative pt-2 flex flex-col items-center overflow-hidden min-h-[400px] max-h-[600px] w-11/12">
+            <Link to={href()} class="group relative flex flex-col items-center overflow-hidden min-h-[400px] max-h-[600px] w-11/12">
                 <div class="relative w-full mx-auto flex justify-center bg-white items-center min-h-[300px] max-h-[400px]">
                     <img
                         src={`${imagePath}/${props.color_product_image}/gallery`}
