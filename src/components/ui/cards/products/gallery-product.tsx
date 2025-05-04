@@ -18,33 +18,30 @@ const GalleryProduct: Component<PROPS> = props => {
         let a = props.product_title.replace(props.mill, "")
         let id = props.id;
         let t = a.replace(id, "")
-        return t.replace(`.`, "")
+        let z = t.replace('- ', "")
+        return z.replace(`.`, "")
     }
 
     return (
-        <div class="group relative py-4">
+        <div class="">
 
-            <Link to={href()} class="flex flex-col w-full h-full">
-                <div class="sm:h-full sm:w-full mx-auto flex justify-center bg-white h-(300px)">
+            <Link to={href()} class="group relative pt-2 flex flex-col items-center w-full min-h-[400px] max-h-[640px]">
+                <div class="relative w-full mx-auto flex justify-center bg-white items-center min-h-[300px] max-h-[400px]">
                     <img
                         src={`${imagePath}/${props.color_product_image}/gallery`}
                         alt={props.product_title}
                         class={classNames(
-                            "rounded-lg w-11/12  h-full bg-white object-center object-contain sm:object-contain group-hover:opacity-75")}/>
+                            "absolute inset-0 bg-white object-center object-scale-down min-h-[300px] max-h-[400px] group-hover:opacity-75")}/>
                 </div>
-                <div class=" pt-7 text-center h-[170px] sm:h-[140px]">
-                    <h3 class="text-xs font-light  text-gray-11">
-                        <div class={'flex flex-col w-full justify-center capitalize'}>
-                            <span aria-hidden="true" class="absolute inset-0"></span>
-                            <span class={'mb-4 font-semibold text-xs'}><span
-                                class={''}>{props.mill}</span> - {props.id}</span>
-                            <span class={'min-h-[40px]'}>{name()}</span>
+                <div class="relative w-full text-center h-[80px] bg-white">
+                    <div class="bg-white absolute  inset-x-0 top-0 flex flex-col text-sm font-medium text-gray-11">
+                          <span class={'font-semibold pt-2 text-[10px]'}><span
+                              class={''}>{props.mill}</span> - {props.id}</span>
+                        <span class={'text-balance px-2 pt-1 text-gray-12 text-xs'}>{name()}</span>
+                    </div>
 
-                        </div>
-                    </h3>
-
-                    <p class="mt-4 text-sm font-medium text-gray-900">{NumberWithCurrency()}+</p>
                 </div>
+                <p class={'absolute bottom-1 w-full flex justify-center inset-x-0 text-sm'}>{NumberWithCurrency()}+ </p>
             </Link>
             {/*
             <Drawer.Trigger
