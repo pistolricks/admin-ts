@@ -5,7 +5,7 @@ import { DEPLOY_URL } from '~/utils/products'
 import { NotFound } from '~/components/NotFound'
 
 import {ProductErrorComponent} from "~/components/ProductError";
-import {For} from "solid-js";
+import {createEffect, For, onMount, Show} from "solid-js";
 
 export const Route = createFileRoute('/products/$productId')({
     loader: async ({ params: { productId } }) => {
@@ -26,29 +26,26 @@ export const Route = createFileRoute('/products/$productId')({
 function ProductComponent() {
     const data = Route.useLoaderData()
 
+    createEffect(() => {
+        console.log(data())
+    })
+
     return (
         <div class="p-2 flex gap-2">
             <ul class="list-disc pl-4">
-                <For each={data().products}>
+                <Show when={data()?.products}>
+                <For each={data()?.products}>
                     {(product) => {
                         return (
                             <li class="whitespace-nowrap">
-                                <Link
-                                    to={"/products/$productId"}
-                                    params={{
-                                        productId: product.Attrs.style,
-                                    }}
 
-                                    class="block py-1 text-blue-800 hover:text-blue-600"
-
-                                >
-                                    <div>{product.Attrs.product_title}</div>
-                                    <div>{product.Attrs.color_name}</div>
-                                </Link>
+                                    <div>{product.product_title}</div>
+                                    <div>{product.color_name}</div>
                             </li>
                         )
                     }}
                 </For>
+                </Show>
             </ul>
             <hr />
             <Outlet />
