@@ -7,7 +7,7 @@ import { NotFound } from '~/components/NotFound'
 import {ProductErrorComponent} from "~/components/ProductError";
 import {createEffect, For, onMount, Show} from "solid-js";
 
-export const Route = createFileRoute('/products/$productId')({
+export const Route = createFileRoute('/apparel/$productId')({
     loader: async ({ params: { productId } }) => {
         return await axios
             .get<ProductsResponse>(DEPLOY_URL + '/api/products/' + productId)

@@ -13,16 +13,16 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as UsersImport } from './routes/users'
 import { Route as RedirectImport } from './routes/redirect'
-import { Route as ProductsImport } from './routes/products'
 import { Route as PostsImport } from './routes/posts'
 import { Route as DeferredImport } from './routes/deferred'
+import { Route as ApparelImport } from './routes/apparel'
 import { Route as PathlessLayoutImport } from './routes/_pathlessLayout'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users.index'
 import { Route as PostsIndexImport } from './routes/posts.index'
 import { Route as UsersUserIdImport } from './routes/users.$userId'
-import { Route as ProductsProductIdImport } from './routes/products.$productId'
 import { Route as PostsPostIdImport } from './routes/posts.$postId'
+import { Route as ApparelProductIdImport } from './routes/apparel.$productId'
 import { Route as PathlessLayoutNestedLayoutImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as PostsPostIdDeepImport } from './routes/posts_.$postId.deep'
 import { Route as PathlessLayoutNestedLayoutRouteBImport } from './routes/_pathlessLayout/_nested-layout/route-b'
@@ -42,12 +42,6 @@ const RedirectRoute = RedirectImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProductsRoute = ProductsImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const PostsRoute = PostsImport.update({
   id: '/posts',
   path: '/posts',
@@ -57,6 +51,12 @@ const PostsRoute = PostsImport.update({
 const DeferredRoute = DeferredImport.update({
   id: '/deferred',
   path: '/deferred',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ApparelRoute = ApparelImport.update({
+  id: '/apparel',
+  path: '/apparel',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -89,16 +89,16 @@ const UsersUserIdRoute = UsersUserIdImport.update({
   getParentRoute: () => UsersRoute,
 } as any)
 
-const ProductsProductIdRoute = ProductsProductIdImport.update({
-  id: '/$productId',
-  path: '/$productId',
-  getParentRoute: () => ProductsRoute,
-} as any)
-
 const PostsPostIdRoute = PostsPostIdImport.update({
   id: '/$postId',
   path: '/$postId',
   getParentRoute: () => PostsRoute,
+} as any)
+
+const ApparelProductIdRoute = ApparelProductIdImport.update({
+  id: '/$productId',
+  path: '/$productId',
+  getParentRoute: () => ApparelRoute,
 } as any)
 
 const PathlessLayoutNestedLayoutRoute = PathlessLayoutNestedLayoutImport.update(
@@ -146,6 +146,13 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof PathlessLayoutImport
       parentRoute: typeof rootRoute
     }
+    '/apparel': {
+      id: '/apparel'
+      path: '/apparel'
+      fullPath: '/apparel'
+      preLoaderRoute: typeof ApparelImport
+      parentRoute: typeof rootRoute
+    }
     '/deferred': {
       id: '/deferred'
       path: '/deferred'
@@ -158,13 +165,6 @@ declare module '@tanstack/solid-router' {
       path: '/posts'
       fullPath: '/posts'
       preLoaderRoute: typeof PostsImport
-      parentRoute: typeof rootRoute
-    }
-    '/products': {
-      id: '/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof ProductsImport
       parentRoute: typeof rootRoute
     }
     '/redirect': {
@@ -188,19 +188,19 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof PathlessLayoutNestedLayoutImport
       parentRoute: typeof PathlessLayoutImport
     }
+    '/apparel/$productId': {
+      id: '/apparel/$productId'
+      path: '/$productId'
+      fullPath: '/apparel/$productId'
+      preLoaderRoute: typeof ApparelProductIdImport
+      parentRoute: typeof ApparelImport
+    }
     '/posts/$postId': {
       id: '/posts/$postId'
       path: '/$postId'
       fullPath: '/posts/$postId'
       preLoaderRoute: typeof PostsPostIdImport
       parentRoute: typeof PostsImport
-    }
-    '/products/$productId': {
-      id: '/products/$productId'
-      path: '/$productId'
-      fullPath: '/products/$productId'
-      preLoaderRoute: typeof ProductsProductIdImport
-      parentRoute: typeof ProductsImport
     }
     '/users/$userId': {
       id: '/users/$userId'
@@ -279,6 +279,17 @@ const PathlessLayoutRouteWithChildren = PathlessLayoutRoute._addFileChildren(
   PathlessLayoutRouteChildren,
 )
 
+interface ApparelRouteChildren {
+  ApparelProductIdRoute: typeof ApparelProductIdRoute
+}
+
+const ApparelRouteChildren: ApparelRouteChildren = {
+  ApparelProductIdRoute: ApparelProductIdRoute,
+}
+
+const ApparelRouteWithChildren =
+  ApparelRoute._addFileChildren(ApparelRouteChildren)
+
 interface PostsRouteChildren {
   PostsPostIdRoute: typeof PostsPostIdRoute
   PostsIndexRoute: typeof PostsIndexRoute
@@ -290,18 +301,6 @@ const PostsRouteChildren: PostsRouteChildren = {
 }
 
 const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
-
-interface ProductsRouteChildren {
-  ProductsProductIdRoute: typeof ProductsProductIdRoute
-}
-
-const ProductsRouteChildren: ProductsRouteChildren = {
-  ProductsProductIdRoute: ProductsProductIdRoute,
-}
-
-const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
-  ProductsRouteChildren,
-)
 
 interface UsersRouteChildren {
   UsersUserIdRoute: typeof UsersUserIdRoute
@@ -318,13 +317,13 @@ const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof PathlessLayoutNestedLayoutRouteWithChildren
+  '/apparel': typeof ApparelRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/posts': typeof PostsRouteWithChildren
-  '/products': typeof ProductsRouteWithChildren
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
+  '/apparel/$productId': typeof ApparelProductIdRoute
   '/posts/$postId': typeof PostsPostIdRoute
-  '/products/$productId': typeof ProductsProductIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
   '/users/': typeof UsersIndexRoute
@@ -336,11 +335,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof PathlessLayoutNestedLayoutRouteWithChildren
+  '/apparel': typeof ApparelRouteWithChildren
   '/deferred': typeof DeferredRoute
-  '/products': typeof ProductsRouteWithChildren
   '/redirect': typeof RedirectRoute
+  '/apparel/$productId': typeof ApparelProductIdRoute
   '/posts/$postId': typeof PostsPostIdRoute
-  '/products/$productId': typeof ProductsProductIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts': typeof PostsIndexRoute
   '/users': typeof UsersIndexRoute
@@ -353,14 +352,14 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
+  '/apparel': typeof ApparelRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/posts': typeof PostsRouteWithChildren
-  '/products': typeof ProductsRouteWithChildren
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
+  '/apparel/$productId': typeof ApparelProductIdRoute
   '/posts/$postId': typeof PostsPostIdRoute
-  '/products/$productId': typeof ProductsProductIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
   '/users/': typeof UsersIndexRoute
@@ -374,13 +373,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/apparel'
     | '/deferred'
     | '/posts'
-    | '/products'
     | '/redirect'
     | '/users'
+    | '/apparel/$productId'
     | '/posts/$postId'
-    | '/products/$productId'
     | '/users/$userId'
     | '/posts/'
     | '/users/'
@@ -391,11 +390,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/apparel'
     | '/deferred'
-    | '/products'
     | '/redirect'
+    | '/apparel/$productId'
     | '/posts/$postId'
-    | '/products/$productId'
     | '/users/$userId'
     | '/posts'
     | '/users'
@@ -406,14 +405,14 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_pathlessLayout'
+    | '/apparel'
     | '/deferred'
     | '/posts'
-    | '/products'
     | '/redirect'
     | '/users'
     | '/_pathlessLayout/_nested-layout'
+    | '/apparel/$productId'
     | '/posts/$postId'
-    | '/products/$productId'
     | '/users/$userId'
     | '/posts/'
     | '/users/'
@@ -426,9 +425,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
+  ApparelRoute: typeof ApparelRouteWithChildren
   DeferredRoute: typeof DeferredRoute
   PostsRoute: typeof PostsRouteWithChildren
-  ProductsRoute: typeof ProductsRouteWithChildren
   RedirectRoute: typeof RedirectRoute
   UsersRoute: typeof UsersRouteWithChildren
   PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
@@ -437,9 +436,9 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
+  ApparelRoute: ApparelRouteWithChildren,
   DeferredRoute: DeferredRoute,
   PostsRoute: PostsRouteWithChildren,
-  ProductsRoute: ProductsRouteWithChildren,
   RedirectRoute: RedirectRoute,
   UsersRoute: UsersRouteWithChildren,
   PostsPostIdDeepRoute: PostsPostIdDeepRoute,
@@ -457,9 +456,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_pathlessLayout",
+        "/apparel",
         "/deferred",
         "/posts",
-        "/products",
         "/redirect",
         "/users",
         "/posts_/$postId/deep"
@@ -474,6 +473,12 @@ export const routeTree = rootRoute
         "/_pathlessLayout/_nested-layout"
       ]
     },
+    "/apparel": {
+      "filePath": "apparel.tsx",
+      "children": [
+        "/apparel/$productId"
+      ]
+    },
     "/deferred": {
       "filePath": "deferred.tsx"
     },
@@ -482,12 +487,6 @@ export const routeTree = rootRoute
       "children": [
         "/posts/$postId",
         "/posts/"
-      ]
-    },
-    "/products": {
-      "filePath": "products.tsx",
-      "children": [
-        "/products/$productId"
       ]
     },
     "/redirect": {
@@ -508,13 +507,13 @@ export const routeTree = rootRoute
         "/_pathlessLayout/_nested-layout/route-b"
       ]
     },
+    "/apparel/$productId": {
+      "filePath": "apparel.$productId.tsx",
+      "parent": "/apparel"
+    },
     "/posts/$postId": {
       "filePath": "posts.$postId.tsx",
       "parent": "/posts"
-    },
-    "/products/$productId": {
-      "filePath": "products.$productId.tsx",
-      "parent": "/products"
     },
     "/users/$userId": {
       "filePath": "users.$userId.tsx",

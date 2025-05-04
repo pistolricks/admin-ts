@@ -51,13 +51,13 @@ function RootComponent() {
     <>
       <div class="p-2 flex gap-2 text-lg">
         <Link
-            to="/products"
+            to="/apparel"
             activeProps={{
               class: 'font-bold',
             }}
             activeOptions={{ exact: true }}
         >
-          Products
+          Apparel
         </Link>{' '}
         <Link
           to="/"

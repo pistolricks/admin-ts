@@ -4,7 +4,7 @@ import axios from 'redaxios'
 import {API_URL, ProductsResponse} from "~/utils/products";
 
 
-export const APIRoute = createAPIFileRoute('/api/products/$id')({
+export const APIRoute = createAPIFileRoute('/api/apparel/$id')({
     GET: async ({request, params}) => {
         console.info(`Fetching products by style=${params.id}... @`, request.url)
 
