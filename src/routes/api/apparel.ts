@@ -7,7 +7,7 @@ export const APIRoute = createAPIFileRoute('/api/apparel')({
     GET: async ({request}) => {
         console.info('Fetching styles... @', request.url)
         const res = await axios.get<StylesResponse>(
-             API_URL + '/v1/styles',
+             API_URL + '/v1/styles?sort=mill',
 
         )
 

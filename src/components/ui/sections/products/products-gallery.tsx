@@ -29,7 +29,7 @@ const ProductsGallery: Component<PROPS> = props => {
               cols={2} colsSm={2} colsMd={4} colsLg={5} colsXl={6}>
             <For each={data()}>
                 {(style: ProductStyle) => (
-                    <GalleryProduct href={style.id} {...style} />
+                    <GalleryProduct href={`/apparel/${style.id}`} {...style} />
                 )}
             </For>
         </Grid>

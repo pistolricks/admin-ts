@@ -26,7 +26,6 @@ const ShirtDecorator = lazy(() => import('~/components/shirt-decorator'));
 
 
 type PROPS = {
-    product: Product;
     products: Product[];
 }
 
@@ -38,11 +37,10 @@ const ProductView: Component<PROPS> = props => {
 
     const {cartStore, setCartStore} = useLayoutContext();
 
-    const product = () => props.product;
     const products = () => props.products as Product[];
 
-    console.log(product(), "product viewer")
-    const [getSelected, setSelected] = createSignal<Product>(product() as Product)
+    console.log(products()?.[0], "product viewer")
+    const [getSelected, setSelected] = createSignal<Product>(products()?.[0] as Product)
 
     const [getSelectedId, setSelectedId] = createSignal<number>(getSelected()?.id)
 
@@ -54,7 +52,7 @@ const ProductView: Component<PROPS> = props => {
         [getSelected()?.front_model_image_url, getSelected()?.back_model_image_url, getSelected()?.front_flat_image_url, getSelected()?.back_flat_image_url].filter((image): image is string => !!image)
     )
 
-    const [getSrc, setSrc] = createSignal(product()?.front_model_image_url)
+    const [getSrc, setSrc] = createSignal(products()?.[0]?.front_model_image_url)
 
     const isSrc = createSelector<string | undefined>(getSrc)
 
@@ -112,7 +110,7 @@ const ProductView: Component<PROPS> = props => {
         return t.replace(`.`, "")
     }
 
-    const [getColor, setColor] = createSignal<string>(product()?.color_name ?? "")
+    const [getColor, setColor] = createSignal<string>(products()?.[0]?.color_name ?? "")
     const handleColor = (m: string) => {
         setColor(() => m)
 
@@ -185,14 +183,14 @@ const ProductView: Component<PROPS> = props => {
     })
 
     onMount(() => {
-        setColor(product()?.color_name ?? "")
-        setSelectedId(product()?.id)
-        setSelected(product())
-        setSrc(product()?.front_model_image_url)
+        setColor(products()?.[0]?.color_name ?? "")
+        setSelectedId(products()?.[0]?.id)
+        setSelected(products()?.[0])
+        setSrc(products()?.[0]?.front_model_image_url)
         setImages(
-            [product()?.front_model_image_url, product()?.back_model_image_url, product()?.front_flat_image_url, product()?.back_flat_image_url].filter((image): image is string => !!image)
+            [products()?.[0]?.front_model_image_url, products()?.[0]?.back_model_image_url, products()?.[0]?.front_flat_image_url, products()?.[0]?.back_flat_image_url].filter((image): image is string => !!image)
         )
-        isSrc(product()?.front_model_image_url)
+        isSrc(products()?.[0]?.front_model_image_url)
     })
 
     return (
@@ -288,7 +286,7 @@ const ProductView: Component<PROPS> = props => {
                     <div class="sm:mt-10  mt:mt-16 sm:px-0 lg:mt-0">
 
                         <div class={'w-full flex justify-end mb-2'}>
-                            <img src={`${imagePath}/${product()?.brand_logo_image}/brand`}
+                            <img src={`${imagePath}/${products()?.[0]?.brand_logo_image}/brand`}
                                  class={'absolute top-0 sm:static  w-[100px] h-[25px] sm:w-[200px] sm:h-[50px] object-contain'}
                                  alt={''}/>
                         </div>
@@ -317,7 +315,7 @@ const ProductView: Component<PROPS> = props => {
                                 <div class="py-1  mt-6 flex justify-between items-center">
                                     <div class="-ml-2 -mt-2 flex flex-wrap items-baseline">
                                         <h3 class="ml-2 mt-2 text-sm font-semibold text-gray-900">Style</h3>
-                                        <p class="ml-2 mt-1 truncate text-sm text-gray-500">{product()?.id}</p>
+                                        <p class="ml-2 mt-1 truncate text-sm text-gray-500">{products()?.[0]?.id}</p>
                                     </div>
                                     <div class="-ml-2 -mt-2 flex flex-wrap items-baseline">
                                         <h3 class="ml-2 mt-2 text-sm font-semibold text-gray-900">Color</h3>
@@ -386,7 +384,7 @@ const ProductView: Component<PROPS> = props => {
                                     <h3 class="sr-only">Description</h3>
 
                                     <div class="space-y-2 text-gray-700">
-                                        <For each={product()?.product_description?.split(". ")}>
+                                        <For each={products()?.[0]?.product_description?.split(". ")}>
                                             {(item) => (
                                                 <p>{item}</p>
                                             )}
@@ -408,9 +406,9 @@ const ProductView: Component<PROPS> = props => {
                                     <div class="mt-6 pb-6" id="disclosure-1">
                                         <ul role="list"
                                             class="list-disc space-y-1 pl-5 text-sm/6 text-gray-700 marker:text-gray-300">
-                                            <li class="pl-2">{product()?.mill}</li>
+                                            <li class="pl-2">{products()?.[0]?.mill}</li>
                                             <li class="pl-2"><span
-                                                class="text-[10px] uppercase font-semibold">Style</span> {product()?.id}
+                                                class="text-[10px] uppercase font-semibold">Style</span> {products()?.[0]?.id}
                                             </li>
                                             <li class="pl-2"><span
                                                 class="text-[10px] uppercase font-semibold">GTIN</span> {getSelected()?.gtin}
